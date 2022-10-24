@@ -48,10 +48,11 @@ public class MyServer implements Runnable{
 
     public void shutDown(){
         done = true;
+        pool.shutdown();
         if(!server.isClosed()){
             try {
                 server.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -116,9 +117,14 @@ public class MyServer implements Runnable{
                 if(!client.isClosed()){
                     client.close();
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        MyServer server = new MyServer();
+        server.run();
     }
 }
